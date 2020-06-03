@@ -1,26 +1,67 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  withStyles,
+  WithStyles,
+  Theme,
+  createStyles,
+  Grid,
+  IconButton,
+  TextField,
+} from '@material-ui/core';
+
+import GitHubIcon from './icons/GitHubIcon';
+import TwitchIcon from './icons/TwitchIcon';
+import TwitterIcon from './icons/TwitterIcon';
+
+const styles = (theme: Theme) => createStyles({});
+
+interface IProps extends WithStyles<typeof styles> {}
+
+class DefaultApp extends React.Component<IProps, {}> {
+  render() {
+    const { classes } = this.props;
+    return (
+      <React.Fragment>
+        <AppBar position="static">
+          <Toolbar>
+            <Grid
+              container
+              spacing={8}
+              justify="space-between"
+              alignItems="center"
+              direction="row"
+            >
+              <Grid item>
+                <Typography variant="h6">Multiline regex tester</Typography>
+              </Grid>
+              <Grid item>
+                <IconButton target="_blank" href="https://github.com/daftmaple">
+                  <GitHubIcon />
+                </IconButton>
+
+                <IconButton
+                  target="_blank"
+                  href="https://www.twitch.tv/daftmaple"
+                >
+                  <TwitchIcon />
+                </IconButton>
+                <IconButton
+                  target="_blank"
+                  href="https://twitter.com/daftmaple"
+                >
+                  <TwitterIcon />
+                </IconButton>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+      </React.Fragment>
+    );
+  }
 }
 
-export default App;
+export default withStyles(styles)(DefaultApp);
