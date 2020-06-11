@@ -30,7 +30,7 @@ const TopBar: React.FC<IProps> = (props) => {
         >
           <Grid item>
             <Typography color="textPrimary" variant="h5">
-              Multiline regex tester
+              ECMAScript multiline regex tester
             </Typography>
           </Grid>
           <Grid item>
