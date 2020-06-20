@@ -11,11 +11,39 @@ import {
 
 const styles = (theme: Theme) => createStyles({});
 
-interface IProps extends WithStyles<typeof styles> { }
+interface IProps extends WithStyles<typeof styles> {}
 
 const Main: React.FC<IProps> = () => {
   const [inputValue, setInputValue] = React.useState('');
   const [testValue, setTestValue] = React.useState('');
+  const [matchingPattern, setMatchingPattern] = React.useState('');
+
+  const setInput = (f: File) => {
+    const r = new FileReader();
+    r.onloadend = () => {
+      const i = r.result;
+      if (typeof i === 'string') {
+        setInputValue(i);
+      }
+    };
+    r.readAsText(f);
+  };
+
+  const checkRegexes = () => {
+    const t = inputValue.split('\n');
+    for (let i = 0; i < t.length; i++) {
+      const pattern = t[i];
+      if (pattern.length === 0) continue;
+      const re = new RegExp(pattern.replace(/(\r\n|\n|\r)/gim, ''), 'igm');
+      if (re.test(testValue)) {
+        setMatchingPattern(pattern);
+        return;
+      }
+    }
+    setMatchingPattern('No matching pattern');
+  };
+
+  React.useEffect(() => {}, [matchingPattern]);
 
   return (
     <div
@@ -48,16 +76,30 @@ const Main: React.FC<IProps> = () => {
           variant="outlined"
           color="primary"
           value={inputValue}
+          onChange={(input) => setInputValue(input.target.value)}
           style={{
             marginTop: 10,
             marginBottom: 10,
           }}
         />
 
-        <Button variant="contained" component="label">
+        <Button variant="contained" color="primary">
           Upload regex file
-          <input type="file" accept="text/plain" style={{ display: 'none' }} />
+          <input
+            type="file"
+            accept="text/plain"
+            style={{ display: 'none' }}
+            onChange={(e) => setInput(e.target.files![0])}
+          />
         </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => setInputValue('')}
+        >
+          Clear regexes
+        </Button>
+        <Button variant="contained">Save into file</Button>
       </div>
       <div
         style={{
@@ -71,7 +113,7 @@ const Main: React.FC<IProps> = () => {
 
         <TextField
           id="filled-multiline-static"
-          label="Input regex"
+          label="Input text"
           multiline
           fullWidth
           rows={8}
@@ -79,15 +121,29 @@ const Main: React.FC<IProps> = () => {
           variant="outlined"
           color="primary"
           value={testValue}
+          onChange={(input) => setTestValue(input.target.value)}
           style={{
             marginTop: 10,
             marginBottom: 10,
           }}
         />
 
-        <Button variant="contained" color="primary">
-          Check validity
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => checkRegexes()}
+        >
+          Test regex
         </Button>
+        <TextField
+          id="outlined-disabled"
+          label="Matching pattern"
+          value={matchingPattern}
+          variant="outlined"
+          InputProps={{
+            readOnly: true,
+          }}
+        />
       </div>
     </div>
   );
