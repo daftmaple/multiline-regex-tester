@@ -43,6 +43,14 @@ const Main: React.FC<IProps> = () => {
     setMatchingPattern('No matching pattern');
   };
 
+  const saveToFile = () => {
+    const e = document.createElement('a');
+    const f = new Blob([inputValue], { type: 'text/plain' });
+    e.href = URL.createObjectURL(f);
+    e.download = 'regexes.txt';
+    e.click();
+  };
+
   React.useEffect(() => {}, [matchingPattern]);
 
   return (
@@ -65,14 +73,12 @@ const Main: React.FC<IProps> = () => {
         }}
       >
         <Typography variant="h5">List of regexes</Typography>
-
         <TextField
           id="filled-multiline-static"
           label="Input regex"
           multiline
           fullWidth
           rows={12}
-          // defaultValue="Forbidden regexes monkaS"
           variant="outlined"
           color="primary"
           value={inputValue}
@@ -82,8 +88,7 @@ const Main: React.FC<IProps> = () => {
             marginBottom: 10,
           }}
         />
-
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" component="label">
           Upload regex file
           <input
             type="file"
@@ -99,7 +104,9 @@ const Main: React.FC<IProps> = () => {
         >
           Clear regexes
         </Button>
-        <Button variant="contained">Save into file</Button>
+        <Button variant="contained" onClick={() => saveToFile()}>
+          Save into file
+        </Button>
       </div>
       <div
         style={{
@@ -110,14 +117,12 @@ const Main: React.FC<IProps> = () => {
         }}
       >
         <Typography variant="h5">Test input</Typography>
-
         <TextField
           id="filled-multiline-static"
           label="Input text"
           multiline
           fullWidth
           rows={8}
-          // defaultValue="Forbidden word monkaS"
           variant="outlined"
           color="primary"
           value={testValue}
