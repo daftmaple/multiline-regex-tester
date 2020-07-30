@@ -7,6 +7,8 @@ import {
   Typography,
   TextField,
   Button,
+  Switch,
+  FormControlLabel,
 } from '@material-ui/core';
 
 const styles = (theme: Theme) => createStyles({});
@@ -16,6 +18,11 @@ interface IProps extends WithStyles<typeof styles> {}
 const Main: React.FC<IProps> = () => {
   const [inputValue, setInputValue] = React.useState('');
   const [testValue, setTestValue] = React.useState('');
+  const [regexVariant, setRegexVariant] = React.useState({
+    i: true,
+    g: true,
+    m: true,
+  });
   const [matchingPattern, setMatchingPattern] = React.useState('');
 
   const setInput = (f: File) => {
@@ -29,12 +36,22 @@ const Main: React.FC<IProps> = () => {
     r.readAsText(f);
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRegexVariant({
+      ...regexVariant,
+      [event.target.name]: event.target.checked,
+    });
+  };
+
   const checkRegexes = () => {
     const t = inputValue.split('\n');
+    const preset = Object.keys(regexVariant)
+      .filter((k) => Object.create(regexVariant)[k])
+      .join('');
     for (let i = 0; i < t.length; i++) {
       const pattern = t[i];
       if (pattern.length === 0) continue;
-      const re = new RegExp(pattern.replace(/(\r\n|\n|\r)/gim, ''), 'igm');
+      const re = new RegExp(pattern.replace(/(\r\n|\n|\r)/gim, ''), preset);
       if (re.test(testValue)) {
         setMatchingPattern(pattern);
         return;
@@ -133,22 +150,69 @@ const Main: React.FC<IProps> = () => {
           }}
         />
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => checkRegexes()}
-        >
-          Test regex
-        </Button>
-        <TextField
-          id="outlined-disabled"
-          label="Matching pattern"
-          value={matchingPattern}
-          variant="outlined"
-          InputProps={{
-            readOnly: true,
+        <div
+          style={{
+            width: '100%',
+            margin: '4px',
           }}
-        />
+        >
+          <FormControlLabel
+            control={
+              <Switch
+                checked={regexVariant.i}
+                onChange={handleChange}
+                color="primary"
+                name="i"
+                inputProps={{ 'aria-label': 'primary checkbox' }}
+              />
+            }
+            label="Insensitive (i)"
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                checked={regexVariant.g}
+                onChange={handleChange}
+                color="primary"
+                name="g"
+                inputProps={{ 'aria-label': 'primary checkbox' }}
+              />
+            }
+            label="Global (g)"
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                checked={regexVariant.m}
+                onChange={handleChange}
+                color="primary"
+                name="m"
+                inputProps={{ 'aria-label': 'primary checkbox' }}
+              />
+            }
+            label="Multi line (m)"
+          />
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => checkRegexes()}
+          >
+            Test regex
+          </Button>
+        </div>
+        <div style={{ marginTop: '12px' }}>
+          <TextField
+            id="outlined-disabled"
+            label="Matching pattern"
+            value={matchingPattern}
+            variant="outlined"
+            InputProps={{
+              readOnly: true,
+            }}
+            style={{ width: '100%' }}
+          />
+        </div>
       </div>
     </div>
   );
