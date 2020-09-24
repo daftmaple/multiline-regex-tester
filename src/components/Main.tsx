@@ -15,7 +15,7 @@ const styles = (theme: Theme) => createStyles({});
 
 interface IProps extends WithStyles<typeof styles> {}
 
-const Main: React.FC<IProps> = () => {
+const Main = (props: IProps) => {
   const [inputValue, setInputValue] = React.useState('');
   const [testValue, setTestValue] = React.useState('');
   const [regexVariant, setRegexVariant] = React.useState({

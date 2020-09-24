@@ -15,9 +15,11 @@ import GitHubIcon from '../icons/GitHubIcon';
 
 const styles = (theme: Theme) => createStyles({});
 
-interface IProps extends WithStyles<typeof styles> {}
+interface IProps extends WithStyles<typeof styles> {
+  children: React.ReactNode;
+}
 
-const TopBar: React.FC<IProps> = (props) => {
+const TopBar = (props: IProps) => {
   return (
     <AppBar position="fixed" color="inherit">
       <Toolbar color="inherit">
