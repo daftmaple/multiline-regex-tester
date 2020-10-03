@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/multiline-regex-tester/static/css/main.5ecd60fb.chunk.css",
+    "main.js": "/multiline-regex-tester/static/js/main.3673d550.chunk.js",
+    "main.js.map": "/multiline-regex-tester/static/js/main.3673d550.chunk.js.map",
+    "runtime-main.js": "/multiline-regex-tester/static/js/runtime-main.0121a66e.js",
+    "runtime-main.js.map": "/multiline-regex-tester/static/js/runtime-main.0121a66e.js.map",
+    "static/js/2.fefd6337.chunk.js": "/multiline-regex-tester/static/js/2.fefd6337.chunk.js",
+    "static/js/2.fefd6337.chunk.js.map": "/multiline-regex-tester/static/js/2.fefd6337.chunk.js.map",
+    "index.html": "/multiline-regex-tester/index.html",
+    "precache-manifest.dda3e7bfac3fdaba2b384c254bb02d6e.js": "/multiline-regex-tester/precache-manifest.dda3e7bfac3fdaba2b384c254bb02d6e.js",
+    "service-worker.js": "/multiline-regex-tester/service-worker.js",
+    "static/css/main.5ecd60fb.chunk.css.map": "/multiline-regex-tester/static/css/main.5ecd60fb.chunk.css.map",
+    "static/js/2.fefd6337.chunk.js.LICENSE.txt": "/multiline-regex-tester/static/js/2.fefd6337.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0121a66e.js",
+    "static/js/2.fefd6337.chunk.js",
+    "static/css/main.5ecd60fb.chunk.css",
+    "static/js/main.3673d550.chunk.js"
+  ]
+}
